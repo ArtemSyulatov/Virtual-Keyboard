@@ -22,7 +22,7 @@ document.addEventListener('keydown',(event)=>{
         && event.code !== 'F1'  && event.code !== 'F2'  && event.code !== 'F3'  && event.code !== 'F4'  && event.code !== 'F5'  && event.code !== 'F6'
         && event.code !== 'F7'  && event.code !== 'F8'  && event.code !== 'F9'  && event.code !== 'F10'  && event.code !== 'F11' && event.code !== 'F12'
         && event.code !== 'Escape' && event.code !== 'Tab' && event.code !== 'CapsLock' && event.code !== 'Meta' && event.code !== 'ContextMenu'
-        && event.code !== 'Enter'
+        && event.code !== 'Enter'  && event.code !== 'ArrowUp' && event.code !== 'ArrowLeft' && event.code !== 'ArrowRight' && event.code !== 'ArrowDown'
     ){
         textArea.innerHTML += event.key
     }
