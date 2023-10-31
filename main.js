@@ -138,12 +138,10 @@ function runOnKeys(func, ...codes) {
 }
 
 function useLang() {
-    console.log(langRu)
     document.getElementById('buttons')?.remove()
     if (!langRu) {
         langRu = true
         paintButtons(characters.russian)
-
     } else {
         langRu = false
         paintButtons(characters.english)
@@ -177,6 +175,18 @@ document.addEventListener('keydown', (event) => {
     }
     if (event.code === 'Backspace') {
         textArea.innerHTML = textArea.innerHTML.slice(0, textArea.innerHTML.length - 1)
+    }
+    if (event.code === 'ArrowUp') {
+        textArea.innerHTML += '▲'
+    }
+    if (event.code === 'ArrowRight') {
+        textArea.innerHTML += '►'
+    }
+    if (event.code === 'ArrowDown') {
+        textArea.innerHTML += '▼'
+    }
+    if (event.code === 'ArrowLeft') {
+        textArea.innerHTML += '◄'
     }
     if (event.code === 'CapsLock') {
         caps = !caps
