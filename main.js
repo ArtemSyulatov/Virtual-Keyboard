@@ -3,13 +3,13 @@ textArea.setAttribute('disabled', 'true')
 document.body.append(textArea)
 let caps = false
 let langRu = true
-
+let dbClickShift = false
 const characters = {
     english: [
         ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Delete'],
-        ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p','[',']','\\'],
-        ['Caps Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',';','"', 'Enter'],
-        ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm',',','.','/', '▲', 'Shift'],
+        ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
+        ['Caps Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '"', 'Enter'],
+        ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '▲', 'Shift'],
         ['Ctrl', 'Alt', 'Space', 'Alt', 'Fn', '◄', '▼', '►', 'Ctrl']
     ],
     russian: [
@@ -25,7 +25,7 @@ const characters = {
         ['Caps Lock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter'],
         ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', '▲', 'Shift'],
         ['Ctrl', 'Alt', 'Space', 'Alt', 'Fn', '◄', '▼', '►', 'Ctrl']
-    ] ,
+    ],
     shiftArrEn: [
         ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Delete'],
         ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|'],
@@ -95,7 +95,24 @@ function paintButtons(arr) {
             })
             button.addEventListener('dblclick', () => {
                 if (button.innerHTML === 'Shift') {
-
+                    console.log(dbClickShift)
+                    if (dbClickShift) {
+                        dbClickShift = !dbClickShift
+                        document.getElementById('buttons')?.remove()
+                        if (langRu === true) {
+                            paintButtons(characters.russian)
+                        } else {
+                            paintButtons(characters.english)
+                        }
+                        return
+                    }
+                    dbClickShift = !dbClickShift
+                    document.getElementById('buttons')?.remove()
+                    if (langRu === true) {
+                        paintButtons(characters.shiftArrRu)
+                    } else {
+                        paintButtons(characters.shiftArrEn)
+                    }
                 }
             })
         }
@@ -124,7 +141,7 @@ function runOnKeys(func, ...codes) {
 function useLang() {
     console.log(langRu)
     document.getElementById('buttons')?.remove()
-    if (!langRu ) {
+    if (!langRu) {
         langRu = true
         paintButtons(characters.russian)
 
