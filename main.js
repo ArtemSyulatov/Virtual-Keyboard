@@ -1,5 +1,6 @@
 const textArea = document.createElement('textarea')
 textArea.setAttribute('disabled', 'true')
+textArea.setAttribute('id','textarea')
 document.body.append(textArea)
 let caps = false
 let langRu = true
@@ -150,7 +151,7 @@ function useLang() {
 
 runOnKeys(
     () => useLang(),
-    "ControlLeft",
+    "ShiftLeft",
     "AltLeft"
 );
 
@@ -162,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let down = false
 document.addEventListener('keydown', (event) => {
-    console.log(event.code)
     if (event.key !== 'Shift' && event.code !== 'Alt' && event.code !== 'Backspace' && event.key !== 'Alt'
         && event.key !== 'Control' && event.code !== 'Delete' && event.code !== 'Insert' && event.code !== 'End' && event.code !== 'Home'
         && event.code !== 'PageUp' && event.code !== 'PageDown' && event.code !== 'ScrollLock' && event.code !== 'Pause' && event.code !== 'Pause'
@@ -220,4 +220,5 @@ document.addEventListener('keyup', (event) => {
         }
     }
 }, false)
-
+console.log(Intl.DateTimeFormat().resolvedOptions().locale)
+console.log(navigator)
