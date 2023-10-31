@@ -95,7 +95,6 @@ function paintButtons(arr) {
             })
             button.addEventListener('dblclick', () => {
                 if (button.innerHTML === 'Shift') {
-                    console.log(dbClickShift)
                     if (dbClickShift) {
                         dbClickShift = !dbClickShift
                         document.getElementById('buttons')?.remove()
@@ -192,7 +191,11 @@ document.addEventListener('keydown', (event) => {
         if (down) return
         down = true
         document.getElementById('buttons')?.remove()
-        paintButtons(characters.shiftArrRu)
+        if (langRu === true) {
+            paintButtons(characters.shiftArrRu)
+        } else {
+            paintButtons(characters.shiftArrEn)
+        }
     }
 }, false)
 
