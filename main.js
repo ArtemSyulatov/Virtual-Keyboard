@@ -1,6 +1,6 @@
 const textArea = document.createElement('textarea')
 textArea.setAttribute('disabled', 'true')
-textArea.setAttribute('id','textarea')
+textArea.setAttribute('id', 'textarea')
 document.body.append(textArea)
 let caps = false
 let langRu = true
@@ -36,6 +36,155 @@ const characters = {
     ]
 };
 
+const keyCodes = {
+    'KeyF': {
+        'ru': 'А',
+        'eng': 'F'
+    },
+    'KeyA': {
+        'ru': 'Ф',
+        'eng': 'A'
+    },
+    'KeyS': {
+        'ru': 'Ы',
+        'eng': 'S'
+    },
+    'KeyG': {
+        'ru': 'П',
+        'eng': 'G'
+    },
+    'KeyH': {
+        'ru': 'Р',
+        'eng': 'H'
+    },
+    'KeyJ': {
+        'ru': 'О',
+        'eng': 'J'
+    },
+    'KeyK': {
+        'ru': 'Л',
+        'eng': 'K'
+    },
+    'KeyL': {
+        'ru': 'Д',
+        'eng': 'L'
+    },
+    'KeyQ': {
+        'ru': 'Й',
+        'eng': 'Q'
+    },
+    'KeyE': {
+        'ru': 'У',
+        'eng': 'E'
+    },
+    'KeyR': {
+        'ru': 'Ц',
+        'eng': 'W'
+    },
+    'KeyD': {
+        'ru': 'В',
+        'eng': 'D'
+    },
+    'KeyT': {
+        'ru': 'Е',
+        'eng': 'T'
+    },
+    'KeyY': {
+        'ru': 'Н',
+        'eng': 'Y'
+    },
+    'KeyU': {
+        'ru': 'Г',
+        'eng': 'U'
+    },
+    'KeyI': {
+        'ru': 'Ш',
+        'eng': 'I'
+    },
+    'KeyO': {
+        'ru': 'Щ',
+        'eng': 'O'
+    },
+    'KeyP': {
+        'ru': 'З',
+        'eng': 'P'
+    },
+    'KeyZ': {
+        'ru': 'Я',
+        'eng': 'Z'
+    },
+    'KeyX': {
+        'ru': 'Ч',
+        'eng': 'X'
+    },
+    'KeyC': {
+        'ru': 'С',
+        'eng': 'C'
+    },
+    'KeyV': {
+        'ru': 'М',
+        'eng': 'V'
+    },
+    'KeyB': {
+        'ru': 'И',
+        'eng': 'B'
+    },
+    'KeyN': {
+        'ru': 'Т',
+        'eng': 'N'
+    },
+    'KeyM': {
+        'ru': 'Ь',
+        'eng': 'M'
+    },
+    'KeyW': {
+        'ru': 'Ц',
+        'eng': 'W'
+    },
+    'Digit1':{
+        'ru': '1',
+        'eng': '1'
+    },
+    'Digit2':{
+        'ru': '2',
+        'eng': '2'
+    },
+    'Digit3':{
+        'ru': '3',
+        'eng': '3'
+    },
+    'Digit4':{
+        'ru': '4',
+        'eng': '4'
+    },
+    'Digit5':{
+        'ru': '5',
+        'eng': '5'
+    },
+    'Digit6':{
+        'ru': '6',
+        'eng': '6'
+    },
+    'Digit7':{
+        'ru': '7',
+        'eng': '7'
+    },
+    'Digit8':{
+        'ru': '8',
+        'eng': '8'
+    },
+    'Digit9':{
+        'ru': '9',
+        'eng': '9'
+    },
+    'Digit0':{
+        'ru': '0',
+        'eng': '0'
+    }
+
+}
+
+
 function paintButtons(arr) {
     const buttonsDiv = document.createElement('div')
     buttonsDiv.setAttribute('id', 'buttons')
@@ -60,7 +209,7 @@ function paintButtons(arr) {
             if (button.innerHTML === 'Space') {
                 button.style.minWidth = '285px'
             }
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (e) => {
                 if (button.innerHTML === 'Tab') {
                     textArea.innerHTML += '\t'
                     return
@@ -154,16 +303,39 @@ runOnKeys(
     "ShiftLeft",
     "AltLeft"
 );
-
 document.addEventListener('DOMContentLoaded', () => {
     langRu = true;
     paintButtons(characters.russian)
-
 })
 
 let down = false
 document.addEventListener('keydown', (event) => {
-    if (event.key !== 'Shift' && event.code !== 'Alt' && event.code !== 'Backspace' && event.key !== 'Alt'
+    if (event.code === 'CapsLock') {
+        caps = !caps
+        document.getElementById('buttons')?.remove()
+        if (langRu === true) {
+            paintButtons(characters.russian)
+        } else {
+            paintButtons(characters.english)
+        }
+        return;
+    }
+    if (event.key === 'Shift') {
+        if (down) return
+        down = true
+        document.getElementById('buttons')?.remove()
+        if (langRu === true) {
+            paintButtons(characters.shiftArrRu)
+        } else {
+            paintButtons(characters.shiftArrEn)
+        }
+        return;
+    }
+    console.log(event.code)
+    if (event.code === 'Backspace') {
+        textArea.innerHTML = textArea.innerHTML.slice(0, textArea.innerHTML.length - 1)
+    }
+    if (event.key !== 'Shift' && event.code !== 'Backspace' && event.key !== 'Alt'
         && event.key !== 'Control' && event.code !== 'Delete' && event.code !== 'Insert' && event.code !== 'End' && event.code !== 'Home'
         && event.code !== 'PageUp' && event.code !== 'PageDown' && event.code !== 'ScrollLock' && event.code !== 'Pause' && event.code !== 'Pause'
         && event.code !== 'F1' && event.code !== 'F2' && event.code !== 'F3' && event.code !== 'F4' && event.code !== 'F5' && event.code !== 'F6'
@@ -171,11 +343,23 @@ document.addEventListener('keydown', (event) => {
         && event.code !== 'Escape' && event.code !== 'Tab' && event.code !== 'CapsLock' && event.code !== 'Meta' && event.code !== 'ContextMenu'
         && event.code !== 'Enter' && event.code !== 'ArrowUp' && event.code !== 'ArrowLeft' && event.code !== 'ArrowRight' && event.code !== 'ArrowDown'
     ) {
-        textArea.innerHTML += event.key
+        if(!caps){
+            if(langRu){
+                textArea.innerHTML += keyCodes[event.code]['ru'].toLowerCase()
+                return
+            }
+
+            textArea.innerHTML += keyCodes[event.code]['eng'].toLowerCase()
+            return;
+        }
     }
-    if (event.code === 'Backspace') {
-        textArea.innerHTML = textArea.innerHTML.slice(0, textArea.innerHTML.length - 1)
+    	if(langRu){
+        textArea.innerHTML += keyCodes[event.code]['ru']
+        return
     }
+        textArea.innerHTML += keyCodes[event.code]['eng']
+
+
     if (event.code === 'ArrowUp') {
         textArea.innerHTML += '▲'
     }
@@ -188,25 +372,7 @@ document.addEventListener('keydown', (event) => {
     if (event.code === 'ArrowLeft') {
         textArea.innerHTML += '◄'
     }
-    if (event.code === 'CapsLock') {
-        caps = !caps
-        document.getElementById('buttons')?.remove()
-        if (langRu === true) {
-            paintButtons(characters.russian)
-        } else {
-            paintButtons(characters.english)
-        }
-    }
-    if (event.key === 'Shift') {
-        if (down) return
-        down = true
-        document.getElementById('buttons')?.remove()
-        if (langRu === true) {
-            paintButtons(characters.shiftArrRu)
-        } else {
-            paintButtons(characters.shiftArrEn)
-        }
-    }
+
 }, false)
 
 document.addEventListener('keyup', (event) => {
@@ -220,5 +386,4 @@ document.addEventListener('keyup', (event) => {
         }
     }
 }, false)
-console.log(Intl.DateTimeFormat().resolvedOptions().locale)
-console.log(navigator)
+
