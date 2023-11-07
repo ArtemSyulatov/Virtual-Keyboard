@@ -9,28 +9,28 @@ const characters = {
     english: [
         ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Delete'],
         ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
-        ['Caps Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '"', 'Enter'],
+        ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '"', 'Enter'],
         ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '▲', 'Shift'],
         ['Ctrl', 'Alt', 'Space', 'Alt', 'Fn', '◄', '▼', '►', 'Ctrl']
     ],
     russian: [
         ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Delete'],
         ['Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\'],
-        ['Caps Lock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter'],
+        ['CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter'],
         ['Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '▲', 'Shift'],
         ['Ctrl', 'Alt', 'Space', 'Alt', 'Fn', '◄', '▼', '►', 'Ctrl']
     ],
     shiftArrRu: [
         ['Ё', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Delete'],
         ['Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '|'],
-        ['Caps Lock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter'],
+        ['CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter'],
         ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', '▲', 'Shift'],
         ['Ctrl', 'Alt', 'Space', 'Alt', 'Fn', '◄', '▼', '►', 'Ctrl']
     ],
     shiftArrEn: [
         ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Delete'],
         ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|'],
-        ['Caps Lock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'Enter'],
+        ['CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'Enter'],
         ['Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '▲', 'Shift'],
         ['Ctrl', 'Alt', 'Space', 'Alt', 'Fn', '◄', '▼', '►', 'Ctrl']
     ]
@@ -241,11 +241,11 @@ function paintButtons(arr) {
             const button = document.createElement('button')
             button.setAttribute('id', 'button')
             button.innerHTML = arr[i][j]
-            if (caps === true && arr[i][j] !== 'Tab' && arr[i][j] !== 'Caps Lock' && arr[i][j] !== 'Shift' && arr[i][j] !== 'Delete'
+            if (caps === true && arr[i][j] !== 'Tab' && arr[i][j] !== 'CapsLock' && arr[i][j] !== 'Shift' && arr[i][j] !== 'Delete'
                 && arr[i][j] !== 'Ctrl' && arr[i][j] !== 'Alt' && arr[i][j] !== 'Space' && arr[i][j] !== 'Enter') {
                 button.innerHTML = arr[i][j].toUpperCase()
             }
-            if (arr[i][j] === 'Caps Lock') {
+            if (arr[i][j] === 'CapsLock') {
                 button.classList.add('caps')
             }
             if (arr[i][j] === 'Shift') {
@@ -299,7 +299,7 @@ function paintButtons(arr) {
                 if (button.innerHTML === 'Fn') {
                     return
                 }
-                if (button.innerHTML === 'Caps Lock') {
+                if (button.innerHTML === 'CapsLock') {
                     caps = !caps
                     document.getElementById('buttons')?.remove()
                     if (langRu === true) {
@@ -382,13 +382,9 @@ document.addEventListener('DOMContentLoaded', () => {
     paintButtons(characters.russian)
 
 })
-// let ruLang = /[а-яА-Я]/
-// console.log(ruLang.match('А'))
-
 let down = false
 document.addEventListener('keydown', (event) => {
     const regexRu = /[а-яА-Я]/
-    console.log(regexRu.test(event.key))
     if(!regexRu.test(event.key)){
         document.getElementById('buttons')?.remove()
         langRu = false
@@ -398,18 +394,12 @@ document.addEventListener('keydown', (event) => {
         langRu = true
         paintButtons(characters.russian)
     }
-    // const buttons = document.querySelectorAll('#button')
-    // for (let button of buttons) {
-    //    let keys =  Object.keys(keyCodes)
-    //     console.log(keys)
-    //     console.log(buttons)
-    // }
-        // } else if (button.innerHTML === 'Delete') {
-        //     button.classList.add('highlight')
-        // } else if (button.innerHTML === 'Shift') {
-        //     button.classList.add('highlight')
-        // }
-
+    const buttons = document.querySelectorAll('#button')
+    for (let button of buttons) {
+        if(button.innerHTML === event.key){
+            button.classList.add('highlight')
+        }
+    }
     switch (event.key) {
         case '!' :
             textArea.innerHTML += '!'
@@ -512,20 +502,15 @@ document.addEventListener('keydown', (event) => {
         return
     }
     textArea.innerHTML += keyCodes[event.code]['eng']
+
 }, false)
 
 document.addEventListener('keyup', (event) => {
     const buttons = document.querySelectorAll('#button')
     for (let button of buttons) {
-        if (button.innerHTML === event.key) {
+        if(button.innerHTML === event.key){
             button.classList.remove('highlight')
         }
-        // if (button.innerHTML === 'Delete') {
-        //     button.classList.remove('highlight')
-        // }
-        // if (button.innerHTML === 'Shift') {
-        //     button.classList.remove('highlight')
-        // }
     }
 
     if (event.key === 'Shift') {
