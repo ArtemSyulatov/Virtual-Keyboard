@@ -114,7 +114,7 @@ button:hover {
 }
 
 button.highlight {
-    color: red;
+    background-color: #535bf2;
 }
 
 button:focus,

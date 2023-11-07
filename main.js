@@ -2,6 +2,22 @@ const textArea = document.createElement('textarea')
 textArea.setAttribute('disabled', 'true')
 textArea.setAttribute('id', 'textarea')
 document.body.append(textArea)
+
+function idsForKeys() {
+    const keyCodesForHighLight = ['Escape', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace',
+        'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF',
+        'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight',
+        'ControlLeft', 'AltLeft', 'Space', 'AltRight', 'Fn', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'
+    ]
+    const buttons = document.querySelectorAll('.button')
+    buttons.forEach((elem, index) => {
+        keyCodesForHighLight.forEach((e, i) => {
+            if (index === i) {
+                elem.id = e
+            }
+        })
+    })
+}
 let caps = false
 let langRu = true
 let dbClickShift = false
@@ -229,6 +245,14 @@ const keyCodes = {
         'ru': '\n',
         'eng': '\n'
     },
+    'Backquote': {
+        'ru': 'ё',
+        'eng': '`'
+    },
+    'ControlLeft': {
+        'ru': '',
+        'eng': ''
+    },
 }
 
 function paintButtons(arr) {
@@ -239,7 +263,7 @@ function paintButtons(arr) {
         row.setAttribute('id', 'row')
         for (let j = 0; j < arr[i].length; j++) {
             const button = document.createElement('button')
-            button.setAttribute('id', 'button')
+            button.setAttribute('class', 'button')
             button.innerHTML = arr[i][j]
             if (caps === true && arr[i][j] !== 'Tab' && arr[i][j] !== 'CapsLock' && arr[i][j] !== 'Shift' && arr[i][j] !== 'Delete'
                 && arr[i][j] !== 'Ctrl' && arr[i][j] !== 'Alt' && arr[i][j] !== 'Space' && arr[i][j] !== 'Enter') {
@@ -342,6 +366,7 @@ function paintButtons(arr) {
         buttonsDiv.appendChild(row)
     }
     document.body.append(buttonsDiv)
+    idsForKeys()
 }
 
 function runOnKeys(func, ...codes) {
@@ -374,29 +399,32 @@ function useLang() {
 
 runOnKeys(
     () => useLang(),
-    "ShiftLeft",
+    "ControlLeft",
     "AltLeft"
 );
 document.addEventListener('DOMContentLoaded', () => {
     langRu = true;
     paintButtons(characters.russian)
-
+    idsForKeys()
 })
 let down = false
+
 document.addEventListener('keydown', (event) => {
-    const regexRu = /[а-яА-Я]/
-    if(!regexRu.test(event.key)){
+    console.log(event.code)
+    const regexRu = /[а-яА-ЯёЁ]/
+    if (!regexRu.test(event.key)) {
         document.getElementById('buttons')?.remove()
         langRu = false
         paintButtons(characters.english)
-    }else{
+    } else {
         document.getElementById('buttons')?.remove()
         langRu = true
         paintButtons(characters.russian)
     }
-    const buttons = document.querySelectorAll('#button')
+    const buttons = document.querySelectorAll('.button')
     for (let button of buttons) {
-        if(button.innerHTML === event.key){
+        if (button.id === event.code) {
+            console.log(button.id)
             button.classList.add('highlight')
         }
     }
@@ -506,13 +534,12 @@ document.addEventListener('keydown', (event) => {
 }, false)
 
 document.addEventListener('keyup', (event) => {
-    const buttons = document.querySelectorAll('#button')
+    const buttons = document.querySelectorAll('.button')
     for (let button of buttons) {
-        if(button.innerHTML === event.key){
+        if (button.id === event.code) {
             button.classList.remove('highlight')
         }
     }
-
     if (event.key === 'Shift') {
         down = false
         caps = false
