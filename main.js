@@ -141,49 +141,95 @@ const keyCodes = {
         'ru': 'Ц',
         'eng': 'W'
     },
-    'Digit1':{
+    'Digit1': {
         'ru': '1',
         'eng': '1'
     },
-    'Digit2':{
+    'Digit2': {
         'ru': '2',
         'eng': '2'
     },
-    'Digit3':{
+    'Digit3': {
         'ru': '3',
         'eng': '3'
     },
-    'Digit4':{
+    'Digit4': {
         'ru': '4',
         'eng': '4'
     },
-    'Digit5':{
+    'Digit5': {
         'ru': '5',
         'eng': '5'
     },
-    'Digit6':{
+    'Digit6': {
         'ru': '6',
         'eng': '6'
     },
-    'Digit7':{
+    'Digit7': {
         'ru': '7',
         'eng': '7'
     },
-    'Digit8':{
+    'Digit8': {
         'ru': '8',
         'eng': '8'
     },
-    'Digit9':{
+    'Digit9': {
         'ru': '9',
         'eng': '9'
     },
-    'Digit0':{
+    'Digit0': {
         'ru': '0',
         'eng': '0'
-    }
-
+    },
+    'Escape': {
+        'ru': 'ё',
+        'eng': '`'
+    },
+    'Tab': {
+        'ru': '\t',
+        'eng': '\t'
+    },
+    'Minus': {
+        'ru': '-',
+        'eng': '-'
+    },
+    'Equal': {
+        'ru': '=',
+        'eng': '='
+    },
+    'BracketRight': {
+        'ru': 'ъ',
+        'eng': ']'
+    },
+    'BracketLeft': {
+        'ru': 'х',
+        'eng': '['
+    },
+    'Semicolon': {
+        'ru': 'ж',
+        'eng': ';'
+    },
+    'Quote': {
+        'ru': 'э',
+        'eng': '"'
+    },
+    'Comma': {
+        'ru': 'б',
+        'eng': ','
+    },
+    'Period': {
+        'ru': 'ю',
+        'eng': '.'
+    },
+    'Slash': {
+        'ru': '.',
+        'eng': '/'
+    },
+    'Enter': {
+        'ru': '\n',
+        'eng': '\n'
+    },
 }
-
 
 function paintButtons(arr) {
     const buttonsDiv = document.createElement('div')
@@ -205,16 +251,35 @@ function paintButtons(arr) {
             if (arr[i][j] === 'Shift') {
                 button.classList.add('shift')
             }
+            if (arr[i][j] === '\\') {
+                button.classList.add('slash')
+            }
+            if (arr[i][j] === '▲') {
+                button.classList.add('ArrowUp')
+            }
+            if (arr[i][j] === 'Ctrl') {
+                button.classList.add('Ctrl')
+            }
+            if (arr[i][j] === 'Enter') {
+                button.classList.add('Enter')
+            }
+            if (arr[i][j] === 'Delete') {
+                button.classList.add('Delete')
+            }
             row.append(button)
             if (button.innerHTML === 'Space') {
                 button.style.minWidth = '285px'
             }
-            button.addEventListener('click', (e) => {
+            button.addEventListener('click', () => {
                 if (button.innerHTML === 'Tab') {
                     textArea.innerHTML += '\t'
                     return
                 }
                 if (button.innerHTML === 'Shift') {
+                    return
+                }
+                if (button.innerHTML === 'Enter') {
+                    textArea.innerHTML += '\n'
                     return
                 }
                 if (button.innerHTML === 'Space') {
@@ -229,6 +294,9 @@ function paintButtons(arr) {
                     return
                 }
                 if (button.innerHTML === 'Alt') {
+                    return
+                }
+                if (button.innerHTML === 'Fn') {
                     return
                 }
                 if (button.innerHTML === 'Caps Lock') {
@@ -263,6 +331,12 @@ function paintButtons(arr) {
                         paintButtons(characters.shiftArrEn)
                     }
                 }
+            })
+            button.addEventListener('mousedown', () => {
+                button.classList.add('highlight')
+            })
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('highlight')
             })
         }
         buttonsDiv.appendChild(row)
@@ -306,10 +380,99 @@ runOnKeys(
 document.addEventListener('DOMContentLoaded', () => {
     langRu = true;
     paintButtons(characters.russian)
+
 })
+// let ruLang = /[а-яА-Я]/
+// console.log(ruLang.match('А'))
 
 let down = false
 document.addEventListener('keydown', (event) => {
+    const regexRu = /[а-яА-Я]/
+    console.log(regexRu.test(event.key))
+    if(!regexRu.test(event.key)){
+        document.getElementById('buttons')?.remove()
+        langRu = false
+        paintButtons(characters.english)
+    }else{
+        document.getElementById('buttons')?.remove()
+        langRu = true
+        paintButtons(characters.russian)
+    }
+    // const buttons = document.querySelectorAll('#button')
+    // for (let button of buttons) {
+    //    let keys =  Object.keys(keyCodes)
+    //     console.log(keys)
+    //     console.log(buttons)
+    // }
+        // } else if (button.innerHTML === 'Delete') {
+        //     button.classList.add('highlight')
+        // } else if (button.innerHTML === 'Shift') {
+        //     button.classList.add('highlight')
+        // }
+
+    switch (event.key) {
+        case '!' :
+            textArea.innerHTML += '!'
+            return;
+        case '@' :
+            textArea.innerHTML += '@'
+            return;
+        case '#' :
+            textArea.innerHTML += '#'
+            return;
+        case '$' :
+            textArea.innerHTML += '$'
+            return;
+        case '%' :
+            textArea.innerHTML += '%'
+            return;
+        case '^' :
+            textArea.innerHTML += '^'
+            return;
+        case '&' :
+            textArea.innerHTML += '&'
+            return;
+        case '*' :
+            textArea.innerHTML += '*'
+            return;
+        case '(' :
+            textArea.innerHTML += '('
+            return;
+        case ')' :
+            textArea.innerHTML += ')'
+            return;
+        case '_' :
+            textArea.innerHTML += '_'
+            return;
+        case '+' :
+            textArea.innerHTML += '+'
+            return;
+        case '~' :
+            textArea.innerHTML += '~'
+            return;
+        case 'Alt':
+            return;
+    }
+    if (event.code === 'ArrowUp') {
+        textArea.innerHTML += '▲'
+        return;
+    }
+    if (event.code === 'ArrowRight') {
+        textArea.innerHTML += '►'
+        return;
+    }
+    if (event.code === 'ArrowDown') {
+        textArea.innerHTML += '▼'
+        return;
+    }
+    if (event.code === 'ArrowLeft') {
+        textArea.innerHTML += '◄'
+        return;
+    }
+    if (event.code === 'Space') {
+        textArea.innerHTML += ' '
+        return;
+    }
     if (event.code === 'CapsLock') {
         caps = !caps
         document.getElementById('buttons')?.remove()
@@ -323,6 +486,7 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'Shift') {
         if (down) return
         down = true
+        caps = true
         document.getElementById('buttons')?.remove()
         if (langRu === true) {
             paintButtons(characters.shiftArrRu)
@@ -331,53 +495,42 @@ document.addEventListener('keydown', (event) => {
         }
         return;
     }
-    console.log(event.code)
     if (event.code === 'Backspace') {
         textArea.innerHTML = textArea.innerHTML.slice(0, textArea.innerHTML.length - 1)
+        return;
     }
-    if (event.key !== 'Shift' && event.code !== 'Backspace' && event.key !== 'Alt'
-        && event.key !== 'Control' && event.code !== 'Delete' && event.code !== 'Insert' && event.code !== 'End' && event.code !== 'Home'
-        && event.code !== 'PageUp' && event.code !== 'PageDown' && event.code !== 'ScrollLock' && event.code !== 'Pause' && event.code !== 'Pause'
-        && event.code !== 'F1' && event.code !== 'F2' && event.code !== 'F3' && event.code !== 'F4' && event.code !== 'F5' && event.code !== 'F6'
-        && event.code !== 'F7' && event.code !== 'F8' && event.code !== 'F9' && event.code !== 'F10' && event.code !== 'F11' && event.code !== 'F12'
-        && event.code !== 'Escape' && event.code !== 'Tab' && event.code !== 'CapsLock' && event.code !== 'Meta' && event.code !== 'ContextMenu'
-        && event.code !== 'Enter' && event.code !== 'ArrowUp' && event.code !== 'ArrowLeft' && event.code !== 'ArrowRight' && event.code !== 'ArrowDown'
-    ) {
-        if(!caps){
-            if(langRu){
-                textArea.innerHTML += keyCodes[event.code]['ru'].toLowerCase()
-                return
-            }
-
-            textArea.innerHTML += keyCodes[event.code]['eng'].toLowerCase()
-            return;
+    if (!caps) {
+        if (langRu) {
+            textArea.innerHTML += keyCodes[event.code]['ru'].toLowerCase()
+            return
         }
+        textArea.innerHTML += keyCodes[event.code]['eng'].toLowerCase()
+        return;
     }
-    	if(langRu){
+    if (langRu) {
         textArea.innerHTML += keyCodes[event.code]['ru']
         return
     }
-        textArea.innerHTML += keyCodes[event.code]['eng']
-
-
-    if (event.code === 'ArrowUp') {
-        textArea.innerHTML += '▲'
-    }
-    if (event.code === 'ArrowRight') {
-        textArea.innerHTML += '►'
-    }
-    if (event.code === 'ArrowDown') {
-        textArea.innerHTML += '▼'
-    }
-    if (event.code === 'ArrowLeft') {
-        textArea.innerHTML += '◄'
-    }
-
+    textArea.innerHTML += keyCodes[event.code]['eng']
 }, false)
 
 document.addEventListener('keyup', (event) => {
+    const buttons = document.querySelectorAll('#button')
+    for (let button of buttons) {
+        if (button.innerHTML === event.key) {
+            button.classList.remove('highlight')
+        }
+        // if (button.innerHTML === 'Delete') {
+        //     button.classList.remove('highlight')
+        // }
+        // if (button.innerHTML === 'Shift') {
+        //     button.classList.remove('highlight')
+        // }
+    }
+
     if (event.key === 'Shift') {
         down = false
+        caps = false
         document.getElementById('buttons')?.remove()
         if (langRu === true) {
             paintButtons(characters.russian)

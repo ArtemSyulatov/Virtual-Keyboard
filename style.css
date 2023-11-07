@@ -14,23 +14,35 @@
 }
 
 #row {
+    display: flex;
+    justify-content: space-between;
     min-width: 100%;
     min-height: 100%;
     position: relative;
 }
 
-button {
-    font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
+
+.Ctrl:last-child {
+    width: 77px;
+}
+
+.Enter:last-child {
+    width: 100px;
 }
 
 button:hover {
     color: #535bf2;
 }
 
-body {
+.slash {
+    width: 96px;
+}
 
+.Delete {
+    width: 120px;
+}
+
+body {
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -82,11 +94,15 @@ h1 {
 }
 
 button {
+    display: inline-block;
+    min-width: 50px;
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
     border-radius: 8px;
     border: 1px solid transparent;
     padding: 0.6em 1.2em;
     font-size: 1em;
-    font-weight: 500;
     font-family: inherit;
     background-color: #1a1a1a;
     cursor: pointer;
@@ -95,6 +111,10 @@ button {
 
 button:hover {
     border-color: #646cff;
+}
+
+button.highlight {
+    color: red;
 }
 
 button:focus,
@@ -115,4 +135,8 @@ button:focus-visible {
     button {
         background-color: #f9f9f9;
     }
+}
+
+.shift:last-child {
+    width: 137px;
 }
